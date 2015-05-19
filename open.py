@@ -18,7 +18,7 @@ plt.show()
 
 # 1. Normalize our feature set x
 features = training_set[['open', 'high', 'low', 'close', 'volume_delta']]
-observations = training_set['p.Open']
+observations = training_set['next_open']
 mu = features.mean()
 sigma = features.std()
 
@@ -70,7 +70,7 @@ plt.show()
 
 # Calculate the predicted brainweights and differences from the observed values
 training_set['predictions'] = np.dot(features_norm, thetas)
-training_set['difference'] = training_set['predictions'] - training_set['p.Open']
+training_set['difference'] = training_set['predictions'] - training_set['next_open']
 training_set.head()
 print training_set
 

@@ -1,0 +1,24 @@
+Alpha:0.001
+Number of Iterations: 10000
+MSE: 0.103056103397
+
+Alpha:0.003
+Number of Iterations: 10000
+MSE: 0.0950543552828
+
+Alpha:0.01
+Number of Iterations: 10000
+MSE: 0.0830188083877
+
+Alpha:0.03
+Number of Iterations: 10000
+MSE: 0.0786818422298
+
+Alpha:0.1
+Number of Iterations: 10000
+MSE: 0.078144833678
+
+Alpha:0.3
+Number of Iterations: 10000
+MSE: 0.0780949291817
+

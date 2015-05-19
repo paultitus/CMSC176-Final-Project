@@ -74,14 +74,14 @@ training_set.describe()
 # print features_norm
 
 # 3. Set the initial alpha and number of iterations
-alpha = [0.001, 0.003, 0.1, 0.3, 1, 3]
+alpha = [0.001, 0.003, 0.01, 0.03, 0.1, 0.3]
 iterations = 0
-convergence = 0.003
+# convergence = 0.0000001
 
-output = open('open results.txt', 'wb')
+output = open('close results.txt', 'wb')
 
 for num in alpha:
-    convergence_delta = 999
+    # convergence_delta = 999
 
     # 1. Normalize our feature set x
     features = training_set[['open', 'high', 'low', 'close', 'volume_delta']]
@@ -99,7 +99,9 @@ for num in alpha:
     features_norm.head()
 
     m = len(observations) * 1.0
+    # iterations = 0
     iterations = 0
+
     thetas = np.zeros(len(features_norm.columns))
     print thetas
 
@@ -111,7 +113,8 @@ for num in alpha:
 
     previous_cost = 0
 
-    while convergence_delta >= convergence:
+    # while convergence_delta >= convergence:
+    while iterations < 10000:
         # Calculate the predicted values
         predicted = np.dot(features_norm, thetas)
 
@@ -122,8 +125,8 @@ for num in alpha:
         sum_of_square_errors = np.square(predicted - observations).sum()
         cost = sum_of_square_errors / (2 * m)
         
-        convergence_delta = cost - previous_cost
-        previous_cost = cost
+        # convergence_delta = cost - previous_cost
+        # previous_cost = cost
         # Append cost to history
         cost_history.append(cost)
         iterations += 1
@@ -132,19 +135,19 @@ for num in alpha:
 
     # Plot the last 25 entries of the cost history  
     plt.plot(cost_history[:25])
-    save("Cost Alpha=" + str(num) + " Convergence=" + str(convergence), ext="png", close=True, verbose=True)
+    save("experiments\close\Cost Alpha=" + str(num) + " Iterations=" + str(iterations), ext="png", close=True, verbose=True)
     # plt.show()
 
     # Calculate the predicted volumes
     training_set['predictions'] = np.dot(features_norm, thetas)
-    training_set['difference'] = training_set['predictions'] - training_set['volume']
+    training_set['difference'] = training_set['predictions'] - training_set['next_close']
     training_set.head()
     print training_set
 
     # Plot the predicted against the observed values
-    p = sns.lmplot("predictions", "volume", data=training_set, size=7)
-    p.set_axis_labels("Predicted Volume Next Day", "Actual Volume Next Day")
-    save("Volume Alpha=" + str(num) + " Convergence=" + str(convergence), ext="png", close=True, verbose=True)
+    p = sns.lmplot("predictions", "next_close", data=training_set, size=7)
+    p.set_axis_labels("Predicted Close Next Day", "Actual Close Next Day")
+    save("experiments\close\Close Alpha=" + str(num) + " Iterations=" + str(iterations), ext="png", close=True, verbose=True)
     # plt.show()
 
 
@@ -154,7 +157,7 @@ for num in alpha:
 
 
     # Calculate the coefficient of determination (r^2)
-    y = np.array(training_set.volume)
+    y = np.array(training_set.next_close)
     p = np.array(training_set.predictions)
     xbar = np.mean(y)
 
@@ -166,6 +169,6 @@ for num in alpha:
 
     string ="Alpha:" + str(num) + '\n'
     string += "Number of Iterations: " + str(iterations) + '\n'
-    string += "Convergence Point: " + str(convergence) + '\n'
+    # string += "Convergence Point: " + str(convergence) + '\n'
     string += "MSE: " + str(mse) + '\n\n'
     output.write(string)
