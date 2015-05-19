@@ -1,0 +1,30 @@
+Alpha:0.001
+Number of Iterations: 2
+Convergence Point: 0.003
+MSE: 1451326616.15
+
+Alpha:0.003
+Number of Iterations: 2
+Convergence Point: 0.003
+MSE: 1451318000.59
+
+Alpha:0.1
+Number of Iterations: 2
+Convergence Point: 0.003
+MSE: 1450921384.72
+
+Alpha:0.3
+Number of Iterations: 2
+Convergence Point: 0.003
+MSE: 1450234909.43
+
+Alpha:1
+Number of Iterations: 2
+Convergence Point: 0.003
+MSE: 1449223715.44
+
+Alpha:3
+Number of Iterations: 150
+Convergence Point: 0.003
+MSE: inf
+

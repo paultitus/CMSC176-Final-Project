@@ -9,16 +9,16 @@ pd.set_option('display.notebook_repr_html', False)
 sns.set_palette(['#00A99D', '#F5CA0C', '#B6129F', '#76620C', '#095C57'])
 pd.version.version
 
-training_set = pd.read_csv('trainingdata.csv')
+training_set = pd.read_csv('trial30.csv')
 training_set.describe()
 
 # Plot the distribution of volumes of the stocks
-# sns.distplot(training_set.volume)
-# plt.show()
+sns.distplot(training_set.volume)
+plt.show()
 
 # 1. Normalize our feature set x
-features = training_set[['open', 'high', 'low', 'close']]
-observations = training_set['volume']
+features = training_set[['open', 'high', 'low', 'close', 'volume_delta']]
+observations = training_set['next_close']
 mu = features.mean()
 sigma = features.std()
 
@@ -34,8 +34,8 @@ features_norm.head()
 # print features_norm
 
 # 3. Set the initial alpha and number of iterations
-alpha = 0.25
-iterations = 150
+alpha = 0.001
+iterations = 10000
 m = len(observations) * 1.0
 
 # 4. Initialize the theta values to zero
@@ -70,25 +70,31 @@ plt.show()
 
 # Calculate the predicted brainweights and differences from the observed values
 training_set['predictions'] = np.dot(features_norm, thetas)
-training_set['difference'] = training_set['predictions'] - training_set['volume']
+training_set['difference'] = training_set['predictions'] - training_set['next_close']
 training_set.head()
 print training_set
 
 # Plot the predicted against the observed values
-p = sns.lmplot("predictions", "volume", data=training_set, size=7)
-p.set_axis_labels("Predicted Volume", "Actual Volume")
+p = sns.lmplot("predictions", "close", data=training_set, size=7)
+p.set_axis_labels("Predicted 'Close' Next Day", "Actual 'Close' Next Day")
 plt.show()
 
 
 # Plot the residuals
-p = sns.residplot(training_set.predictions, training_set.volume, lowess=True)
+p = sns.residplot(training_set.predictions, training_set.close, lowess=True)
 plt.show()
 
 
 # Calculate the coefficient of determination (r^2)
-y = np.array(training_set.volume)
+y = np.array(training_set.close)
 p = np.array(training_set.predictions)
 xbar = np.mean(y)
 
 r_squared = 1 - np.square(y - p).sum() / np.square(y - xbar).sum()
 print r_squared
+
+mse = ((y - p) ** 2).mean(axis=None) 
+
+print "Alpha:" + str(alpha)
+print "Number of Iterations: " + str(iterations)
+print "MSE: " + str(mse)
