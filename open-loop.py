@@ -74,7 +74,7 @@ training_set.describe()
 # print features_norm
 
 # 3. Set the initial alpha and number of iterations
-alpha = [0.001, 0.003, 0.1, 0.3, 1, 3]
+alpha = [0.001, 0.003, 0.1, 0.3]
 iterations = 0
 convergence = 0.003
 
@@ -111,7 +111,8 @@ for num in alpha:
 
     previous_cost = 0
 
-    while convergence_delta >= convergence:
+    # while convergence_delta >= convergence:
+    while iterations < 1000:
         # Calculate the predicted values
         predicted = np.dot(features_norm, thetas)
 

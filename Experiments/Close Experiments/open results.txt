@@ -1,20 +1,20 @@
 Alpha:0.001
 Number of Iterations: 1000
 Convergence Point: 0.003
-MSE: 1449973053.97
+MSE: 1449972016.56
 
 Alpha:0.003
 Number of Iterations: 1000
 Convergence Point: 0.003
-MSE: 1449292156.9
+MSE: 1449290579.69
 
 Alpha:0.1
 Number of Iterations: 1000
 Convergence Point: 0.003
-MSE: 1449186122.4
+MSE: 1449184591.39
 
 Alpha:0.3
 Number of Iterations: 1000
 Convergence Point: 0.003
-MSE: 1449186017.23
+MSE: 1449184518.72
 
